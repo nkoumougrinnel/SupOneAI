@@ -245,4 +245,53 @@ Pour la production, utiliser **HTTPS** (`VITE_API_URL=https://...`) et un backen
 
 ---
 
+## 12. Features avancées (v1.1.0+)
+
+### Notifications
+- **Push notifications**: Firebase Cloud Messaging via `@capacitor/push-notifications`
+- **Notifications locales**: Alertes pour réponses longues et erreurs
+- Config: `capacitor.config.json` → `plugins.PushNotifications`
+
+### Mode hors ligne
+- **Cache IndexedDB**: Réponses chat en cache (LRU, 100 messages, TTL 24h)
+- **Queue messages**: Les messages envoyés hors-ligne sont enfilessés et synchronisés
+- **Service Worker**: Cache First pour assets, Network First pour API
+
+### Partage natif
+- **Share sheet**: Partager une réponse via WhatsApp, Telegram, etc.
+- **Export chat**: Télécharger l'historique en JSON ou TXT
+- **QR Code**: Générer un QR code pour partage rapide
+
+### Batterie & Réseau
+- **Détection réseau**: `@capacitor/network` pour WiFi/4G/hors-ligne
+- **Optimisation batterie**: Polling adaptatif (25s → 60s → 120s)
+- **Badge economie**: Indicateur visuel quand le mode economie est actif
+
+### UI/UX
+- **Virtualisation**: `react-window` pour 100+ messages sans lag
+- **Animations**: `framer-motion` pour slide-up, fade-in, stagger
+- **Gestures**: Swipe pour sidebar, long press pour menu contextuel
+- **Skeleton loaders**: Placeholders animés au lieu de spinners
+
+### Monitoring
+- **Sentry**: Error tracking avec contexte
+- **Analytics**: Tracking questions, réponses, feedbacks
+- **Performance**: FCP, LCP, CLS, FID, TTI, API response times
+
+### Commands utiles
+```bash
+# Analyser le bundle
+npm run analyze
+
+# Tests
+npm run test
+npm run test:watch
+npm run test:coverage
+
+# Build release
+npm run android:build:release
+```
+
+---
+
 *Club Informatique SUP'PTIC — SUP'ONE AI.*

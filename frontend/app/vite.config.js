@@ -15,7 +15,7 @@ export default defineConfig({
         description:
           "Posez vos questions sur SUP'ONE : admissions, vie étudiante, programmes.",
         theme_color: '#1a4594',
-        background_color: '#070f1f',
+        background_color: '#0a1020',
         display: 'standalone',
         orientation: 'portrait-primary',
         lang: 'fr-FR',
@@ -46,12 +46,54 @@ export default defineConfig({
             options: {
               cacheName: 'supone-api',
               networkTimeoutSeconds: 12,
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 5 * 60,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'supone-images',
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 30 * 24 * 60 * 60,
+              },
+            },
+          },
+          {
+            urlPattern: /\.(?:woff|woff2|ttf|eot)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'supone-fonts',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 365 * 24 * 60 * 60,
+              },
             },
           },
         ],
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'vendor'
+          }
+        },
+      },
+    },
+    cssCodeSplit: true,
+    sourcemap: false,
+  },
   server: {
     port: 5174,
     proxy: {

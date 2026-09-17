@@ -1,0 +1,55 @@
+name: Build APK (Debug)
+
+on:
+  push:
+    branches: ['feature/*', 'enhancement/*', 'develop']
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  build-android:
+    name: Build Debug APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/app/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Install frontend dependencies
+        working-directory: frontend/app
+        run: npm ci
+
+      - name: Lint frontend
+        working-directory: frontend/app
+        run: npm run lint || true
+
+      - name: Build frontend
+        working-directory: frontend/app
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL || 'https://example.up.railway.app' }}
+        run: npm run build
+
+      - name: Sync Capacitor
+        working-directory: frontend/app
+        run: npx cap sync android
+
+      - name: Build Debug APK
+        working-directory: frontend/app/android
+        run: ./gradlew assembleDebug
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: supone-debug-${{ github.sha }}
+          path: frontend/app/android/app/build/outputs/apk/debug/*.apk
+          retention-days: 7
+          if-no-files-found: warn

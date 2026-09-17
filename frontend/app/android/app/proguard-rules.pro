@@ -5,17 +5,41 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Preserve line number information for debugging stack traces
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Keep annotations
+-keepattributes *Annotation*
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Keep JavaScript interface for WebView (Capacitor)
+-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+   public *;
+}
+
+# Capacitor - keep Capacitor bridge classes
+-keep class com.getcapacitor.** { *; }
+-keep class com.getcapacitor.plugins.** { *; }
+
+# Firebase (if used)
+-keep class com.google.firebase.** { *; }
+-dontwarn com.google.firebase.**
+
+# Keep Gson TypeToken if used
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
+
+# Keep R8 from removing interface methods needed for WebView
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+# Optimize: remove unused code
+-optimizationpasses 5
+-allowaccessmodification
+-dontpreverify
+
+# Don't warn about missing classes
+-dontwarn javax.annotation.**
+-dontwarn sun.misc.Unsafe
+-dontwarn android.support.**

@@ -25,57 +25,57 @@ const GLOBAL_STYLE = `
   }
 
   :root, [data-theme="dark"] {
-    --bg-primary: #212121;
-    --bg-secondary: #171717;
-    --bg-tertiary: #303030;
-    --bg-hover: #3a3a3a;
-    --bg-active: #424242;
-    --bg-input: #2f2f2f;
-    --border: #424242;
-    --border-light: #3a3a3a;
-    --text-primary: #ececec;
-    --text-secondary: #b4b4b4;
-    --text-tertiary: #8e8e8e;
-    --text-placeholder: #7a7a7a;
-    --accent: #10a37f;
-    --accent-hover: #1a7f64;
-    --accent-bg: rgba(16,163,115,.12);
+    --bg-primary: #0f1729;
+    --bg-secondary: #0a1020;
+    --bg-tertiary: #1a2744;
+    --bg-hover: #1e3055;
+    --bg-active: #243a66;
+    --bg-input: #162035;
+    --border: #1e3055;
+    --border-light: #1a2744;
+    --text-primary: #e8ecf4;
+    --text-secondary: #94a3c0;
+    --text-tertiary: #5f7294;
+    --text-placeholder: #4a5d80;
+    --accent: #1a4594;
+    --accent-hover: #2563eb;
+    --accent-bg: rgba(26,69,148,.18);
     --error: #ef4444;
     --error-bg: rgba(239,68,68,.12);
-    --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
-    --shadow-md: 0 4px 12px rgba(0,0,0,.4);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.4);
+    --shadow-md: 0 4px 14px rgba(0,0,0,.5);
     --overlay: rgba(0,0,0,.6);
-    --scrollbar: rgba(255,255,255,.12);
-    --user-bubble: #2f2f2f;
+    --scrollbar: rgba(100,140,200,.15);
+    --user-bubble: #1a4594;
     --assistant-bubble: transparent;
-    --code-bg: #1a1a1a;
+    --code-bg: #0d1424;
   }
 
   [data-theme="light"] {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f7f7f8;
-    --bg-tertiary: #ececec;
-    --bg-hover: #e8e8e8;
-    --bg-active: #d9d9d9;
-    --bg-input: #f4f4f4;
-    --border: #d9d9d9;
-    --border-light: #e8e8e8;
-    --text-primary: #0d0d0d;
-    --text-secondary: #6e6e6e;
-    --text-tertiary: #9a9a9a;
-    --text-placeholder: #8e8e8e;
-    --accent: #10a37f;
-    --accent-hover: #0e8c6b;
-    --accent-bg: rgba(16,163,115,.08);
+    --bg-primary: #f0f4fa;
+    --bg-secondary: #e4ecf7;
+    --bg-tertiary: #d4dfed;
+    --bg-hover: #c8d6ea;
+    --bg-active: #b8c8de;
+    --bg-input: #ffffff;
+    --border: #c0cfdf;
+    --border-light: #d4dfed;
+    --text-primary: #0d1b33;
+    --text-secondary: #3d5580;
+    --text-tertiary: #6880a0;
+    --text-placeholder: #8095b5;
+    --accent: #1a4594;
+    --accent-hover: #14377a;
+    --accent-bg: rgba(26,69,148,.08);
     --error: #dc2626;
     --error-bg: rgba(220,38,38,.08);
-    --shadow-sm: 0 1px 2px rgba(0,0,0,.06);
-    --shadow-md: 0 4px 12px rgba(0,0,0,.08);
-    --overlay: rgba(0,0,0,.4);
-    --scrollbar: rgba(0,0,0,.12);
-    --user-bubble: #f4f4f4;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+    --shadow-md: 0 4px 14px rgba(0,0,0,.08);
+    --overlay: rgba(0,0,0,.3);
+    --scrollbar: rgba(26,69,148,.12);
+    --user-bubble: #1a4594;
     --assistant-bubble: transparent;
-    --code-bg: #f7f7f8;
+    --code-bg: #e8ecf4;
   }
 
   html, body, #root { width: 100%; height: 100%; height: 100dvh; }
@@ -154,7 +154,7 @@ const IcoSparkles = () => (
 )
 
 function StatusDot({ status }) {
-  const c = { online: '#10a37f', degraded: '#f59e0b', offline: '#ef4444', checking: '#8e8e8e' }
+  const c = { online: '#1a4594', degraded: '#f59e0b', offline: '#ef4444', checking: '#5f7294' }
   return <span style={{ width: 7, height: 7, borderRadius: '50%', background: c[status] || '#8e8e8e', flexShrink: 0, animation: status === 'checking' ? 'pulse 1.5s ease infinite' : 'none' }} />
 }
 
@@ -403,7 +403,7 @@ function Welcome({ suggestions, disabled, onSelect, user }) {
         width: 56, height: 56, borderRadius: 14, marginBottom: 28,
         background: 'var(--accent)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        color: '#fff', boxShadow: '0 4px 20px rgba(16,163,115,.3)',
+        color: '#fff', boxShadow: '0 4px 20px rgba(26,69,148,.3)',
       }}>
         <IcoSparkles />
       </div>

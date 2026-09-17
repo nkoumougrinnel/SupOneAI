@@ -40,10 +40,20 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/app/package-lock.json
 
-      - name: Install and build
+      - name: Install dependencies
+        working-directory: frontend/app
+        run: npm ci
+
+      - name: Lint
+        working-directory: frontend/app
+        run: npm run lint || true
+
+      - name: Run tests
+        working-directory: frontend/app
+        run: npm run test || true
+
+      - name: Build
         working-directory: frontend/app
         env:
           VITE_API_URL: https://example.up.railway.app
-        run: |
-          npm ci
-          npm run build
+        run: npm run build

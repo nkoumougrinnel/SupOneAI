@@ -1,0 +1,44 @@
+# ============================================================================
+# Service systemd — SUP'ONE AI (sans Docker)
+# ============================================================================
+# Usage:
+#   sudo cp deploy/oracle/supone.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable supone
+#   sudo systemctl start supone
+# ============================================================================
+
+[Unit]
+Description=SUP'ONE AI Backend (Django + Gunicorn)
+After=network.target postgresql.service
+
+[Service]
+Type=notify
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/SupOneAI/backend
+Environment="PATH=/home/ubuntu/SupOneAI/venv/bin:/usr/local/bin:/usr/bin:/bin"
+EnvironmentFile=/home/ubuntu/SupOneAI/backend/.env
+ExecStart=/home/ubuntu/SupOneAI/venv/bin/gunicorn \
+    config.wsgi:application \
+    --bind unix:/run/supone/gunicorn.sock \
+    --workers 3 \
+    --timeout 120 \
+    --max-requests 1000 \
+    --max-requests-jitter 50 \
+    --access-logfile /var/log/supone/access.log \
+    --error-logfile /var/log/supone/error.log \
+    --log-level info
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+RestartSec=5
+KillMode=mixed
+TimeoutStopSec=10
+
+# Sécurité
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/home/ubuntu/SupOneAI/backend /var/log/supone /run/supone
+
+[Install]
+WantedBy=multi-user.target

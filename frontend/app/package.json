@@ -6,22 +6,38 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "analyze": "vite-bundle-visualizer",
     "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "preview": "vite preview",
     "cap:init": "npx cap init \"SUP'ONE AI\" com.supptic.suponeai --web-dir dist",
     "cap:sync": "npm run build && npx cap sync android",
     "android:open": "npx cap open android",
     "android:build": "npm run cap:sync && cd android && .\\gradlew.bat assembleDebug",
-    "android:build:win": "powershell -NoProfile -Command \"$j = Get-ChildItem 'C:\\Program Files\\Microsoft\\jdk-21*' -ErrorAction SilentlyContinue | Select-Object -First 1; if (-not $j) { $j = Get-ChildItem 'C:\\Program Files\\Microsoft\\jdk-17*' | Select-Object -First 1 }; if ($j) { $env:JAVA_HOME = $j.FullName }; npm run android:build\""
+    "android:build:win": "powershell -NoProfile -Command \"$j = Get-ChildItem 'C:\\Program Files\\Microsoft\\jdk-21*' -ErrorAction SilentlyContinue | Select-Object -First 1; if (-not $j) { $j = Get-ChildItem 'C:\\Program Files\\Microsoft\\jdk-17*' | Select-Object -First 1 }; if ($j) { $env:JAVA_HOME = $j.FullName }; npm run android:build\"",
+    "android:build:release": "npm run cap:sync && cd android && .\\gradlew.bat assembleRelease"
   },
   "dependencies": {
     "@capacitor/android": "^7.2.0",
     "@capacitor/core": "^7.2.0",
+    "@capacitor/device": "^7.0.1",
+    "@capacitor/filesystem": "^7.0.1",
+    "@capacitor/haptics": "^7.0.1",
     "@capacitor/keyboard": "^7.0.1",
+    "@capacitor/local-notifications": "^7.0.1",
+    "@capacitor/network": "^7.0.1",
+    "@capacitor/push-notifications": "^7.0.1",
+    "@capacitor/share": "^7.0.1",
     "@capacitor/splash-screen": "^7.0.1",
     "@capacitor/status-bar": "^7.0.1",
+    "@sentry/capacitor": "^0.18.0",
+    "framer-motion": "^12.12.2",
+    "idb": "^8.0.2",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "react-window": "^1.8.11"
   },
   "devDependencies": {
     "@capacitor/cli": "^7.2.0",
@@ -33,7 +49,10 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "jsdom": "^26.1.0",
+    "vitest": "^3.2.1",
     "vite": "^8.0.12",
+    "vite-bundle-visualizer": "^1.2.1",
     "vite-plugin-pwa": "^1.3.0"
   }
 }

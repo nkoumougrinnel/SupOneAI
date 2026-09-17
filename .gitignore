@@ -40,3 +40,8 @@ node_modules/
 # Artefacts RAG volumineux (régénérés / téléchargés au démarrage)
 backend/rag_data/
 *.pyc
+
+# Signing keystores (NE JAMAIS COMMITER)
+*.jks
+*.keystore
+google-services.json
